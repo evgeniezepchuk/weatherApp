@@ -10,9 +10,9 @@ import UIKit
 
 class HeaderView: UIView {
     
-    var imageID: String = "icon"
-    var city: String = "Минск"
-    var temperature: String = "-7"
+    var imageID: String = ""
+    var city: String = ""
+    var temperature: String = ""
     
     private lazy var view: UIView = {
         let view = UIView()
@@ -23,24 +23,21 @@ class HeaderView: UIView {
     
     private lazy var weatherValue: UILabel = {
         let label = UILabel()
-        label.text = "-7"
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 60)
+        label.font = UIFont.systemFont(ofSize: 60, weight: .thin)
         return label
     }()
     
     private lazy var cityName: UILabel = {
        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 25)
-        label.adjustsFontSizeToFitWidth = true 
-        label.text = "Минск"
+        label.font = UIFont.systemFont(ofSize: 30, weight: .regular)
+        label.adjustsFontSizeToFitWidth = true
         label.textColor = .black
         return label
     }()
     
     private lazy var weatherImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "icon")
         image.image?.withRenderingMode(.automatic)
         return image
     }()
@@ -87,8 +84,8 @@ class HeaderView: UIView {
         NSLayoutConstraint.activate([
             verticalStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             verticalStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            verticalStack.widthAnchor.constraint(equalToConstant: 100),
-            verticalStack.heightAnchor.constraint(equalToConstant: 150)
+            verticalStack.widthAnchor.constraint(equalToConstant: 150),
+            verticalStack.heightAnchor.constraint(equalToConstant: 170)
         ])
     }
     

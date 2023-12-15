@@ -49,7 +49,7 @@ class ResultViewController: UIViewController {
     }
     
     private func getWeather() {
-        self.coord = LocationManager.shared.coordinate
+//        self.coord = LocationManager.shared.coordinate
         DispatchQueue.main.async {
             print("------> coord", self.coord)
             self.loadAPI()

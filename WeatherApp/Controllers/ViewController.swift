@@ -12,6 +12,9 @@ class ViewController: UIViewController {
     var model: WeatherModel?
     var coord: (Double, Double) = (0,0)
     var headerView: HeaderView?
+    var city: String?
+    var isOn = true
+    let value: String = "C".localized()
     
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -26,51 +29,27 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getWeather()
+        if isOn {
+            connectionLocating()
+        }
         tableView.delegate = self
         tableView.dataSource = self
-        connectionLocating()
+        
         configureTableView()
         configureNavBar()
         configureHeaderView()
         view.backgroundColor = .bckrgndColor
     }
     
-    private func searchCitiesWeather() {
-        APIManager.shared.getCityWeather(cityName: "Минск") { result in
-            switch result {
-            case .success(let cities):
-                cities.forEach { value in
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+    private func configureHeaderView() {
+        headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: view.bounds.height / 3.5))
+        self.tableView.tableHeaderView = headerView
     }
     
-    private func getWeather() {
-        self.coord = LocationManager.shared.coordinate
-        DispatchQueue.main.async {
-            print("------> coord", self.coord)
-            self.loadAPI()
-        }
-    }
-    
-    
-    private func loadAPI() {
-        APIManager.shared.getWeather(latitide: coord.0, longitutde: coord.1) { [weak self] result in
-            switch result {
-            case .success(let weather):
-//                print(weather)
-                self?.model = weather
-                DispatchQueue.main.async {
-                    self?.headerView?.configureHeaderView(imageID: self?.model?.hourly?[0].weather?[0].icon! ?? "icon", city: self?.model?.timezone ?? "", temperature: String(Int(self?.model?.hourly?[0].temp ?? 0)))
-//                    print(self?.model?.daily![0].dt)
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
+    private func configureNavBar() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(openSearchController))
+        navigationController?.navigationBar.barTintColor = .bckrgndColor
+//        navigationController?.navigationBar.isTranslucent = true
     }
     
     private func configureTableView() {
@@ -84,31 +63,59 @@ class ViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
-    private func configureHeaderView() {
-        headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: view.bounds.height / 3.5))
-        self.tableView.tableHeaderView = headerView
+
+    public func reconfigureView(city: String, model: WeatherModel, isOn: Bool) {
+            self.isOn = isOn
+            self.city = city
+            self.model = model
+           
+        DispatchQueue.main.async {
+            self.headerView?.configureHeaderView(imageID: model.hourly?[0].weather?[0].icon! ?? "icon", city: city , temperature: String(Int(model.hourly?[0].temp ?? 0)) + "°" + self.value)
+            self.tableView.reloadData()
+        }
     }
     
-    private func configureNavBar() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(openSearchController))
+    private func loadModel() {
+        LocationManager.shared.getCurrentLocation { location in
+            APIManager.shared.getNameOfCity(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { result in
+                switch result {
+                case .success(let city):
+                    DispatchQueue.main.async {
+                        self.city = city[0].local_names?.ru ?? ""  
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            APIManager.shared.getWeather(latitide: location.coordinate.latitude, longitutde: location.coordinate.longitude) { result in
+                switch result {
+                case .success(let model):
+                    print(model.timezone)
+                    self.model = model
+                    DispatchQueue.main.async {
+                        self.headerView?.configureHeaderView(imageID: self.model?.hourly?[0].weather?[0].icon! ?? "icon", city: self.city ?? "", temperature: String(Int(self.model?.hourly?[0].temp ?? 0)) + "°" + self.value)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
     }
     
     private func connectionLocating() {
         if ConnectionManager.shared.isConnected {
-//            tableView.backgroundColor = .green
+            loadModel()
         } else {
             do {
                 let data = UserDefaults.standard.object(forKey: "data") as! Data
-//                let weather = try JSONSerialization.jsonObject(with: data)
-//                print(weather)
+                let cityData = UserDefaults.standard.object(forKey: "city") as! Data
                 let model = try JSONDecoder().decode(WeatherModel.self, from: data)
                 self.model = model
+                let city = try JSONDecoder().decode([Cities].self, from: cityData)
+                self.city = city[0].local_names?.ru ?? ""
                 DispatchQueue.main.async {
-                    self.headerView?.configureHeaderView(imageID: self.model?.hourly?[0].weather?[0].icon! ?? "icon", city: self.model?.timezone ?? "", temperature: String(Int(self.model?.hourly?[0].temp ?? 0)))
+                    self.headerView?.configureHeaderView(imageID: self.model?.hourly?[0].weather?[0].icon! ?? "icon", city: self.city ?? "", temperature: String(Int(self.model?.hourly?[0].temp ?? 0)))
                 }
-                
-            
             } catch {
                 print(error)
             }
@@ -191,9 +198,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch section {
         case 0:
-            label.text = "   ⏳ ПОЧАСОВОЙ ПРОГНОЗ"
+            label.text = "   ⏳ Почасовой прогноз"
         case 1:
-            label.text = "   📆 ПРОГНОЗ НА 6 ДНЕЙ"
+            label.text = "   📆 Прогноз на 6 дней"
         default:
             label.text = "Нет связи"
         }

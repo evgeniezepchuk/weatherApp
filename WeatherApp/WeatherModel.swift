@@ -17,8 +17,8 @@ struct WeatherModel: Codable {
 }
 
 struct Hourly: Codable {
-    let dt: Int? = 1231423415
-    let temp: Double? = 0.0
+    let dt: Int? 
+    let temp: Double?
     let feels_like: Double?
     let pressure: Int?
     let humidity: Int?
@@ -33,22 +33,22 @@ struct Hourly: Codable {
 }
 
 struct Daily: Codable {
-    let dt: Int? = 0
+    let dt: Int?
     let temp: Temp?
     let weather: [Weather]?
 }
 
 struct Temp: Codable {
-    let day: Double? = 0.0
-    let min: Double? = 0.0
+    let day: Double?
+    let min: Double?
     
 }
 
 struct Weather: Codable {
-    let id: Int? = 0
-    let main: String? = ""
-    let description: String? = ""
-    let icon: String? = ""
+    let id: Int?
+    let main: String?
+    let description: String?
+    let icon: String?
 }
 
 
@@ -57,13 +57,13 @@ struct CitiesList: Codable {
 }
 
 struct Cities: Codable {
-    let name: String? = ""
-    let lat: Double? = 0.0
-    let lon: Double? = 0.0
+    let name: String?
+    let lat: Double?
+    let lon: Double?
     let local_names: LocalNames?
-    
+    let country: String?
 }
 
 struct LocalNames: Codable {
-    let ru: String = ""
+    let ru: String?
 }

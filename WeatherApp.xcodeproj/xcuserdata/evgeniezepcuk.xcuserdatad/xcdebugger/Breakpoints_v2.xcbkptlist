@@ -7,47 +7,47 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BFBB84C7-D348-4AD4-A18D-333C1FAD9867"
-            shouldBeEnabled = "Yes"
+            uuid = "1604AB06-DC03-428A-A031-BCB606DFAC52"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeatherApp/Views/HourlyWeatherCell.swift"
+            filePath = "WeatherApp/Controllers/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "collectionView(_:cellForItemAt:)"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "BFBB84C7-D348-4AD4-A18D-333C1FAD9867 - eb48b0b77c69bc09"
+                  uuid = "1604AB06-DC03-428A-A031-BCB606DFAC52 - f78dd21ad1949fea"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "WeatherApp.HourlyWeatherCell.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  symbolName = "WeatherApp.ViewController.viewDidLoad() -&gt; ()"
                   moduleName = "WeatherApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/evgeniezepcuk/Desktop/iOSDevelopment/WeatherApp/WeatherApp/Views/HourlyWeatherCell.swift"
+                  urlString = "file:///Users/evgeniezepcuk/Desktop/iOSDevelopment/WeatherApp/WeatherApp/Controllers/ViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "72"
-                  endingLineNumber = "72"
-                  offsetFromSymbolStart = "2424">
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "256">
                </Location>
                <Location
-                  uuid = "BFBB84C7-D348-4AD4-A18D-333C1FAD9867 - eb48b0b77c69bc09"
+                  uuid = "1604AB06-DC03-428A-A031-BCB606DFAC52 - f78dd21ad1949c1e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "WeatherApp.HourlyWeatherCell.collectionView(_: __C.UICollectionView, cellForItemAt: Foundation.IndexPath) -&gt; __C.UICollectionViewCell"
+                  symbolName = "WeatherApp.ViewController.viewDidLoad() -&gt; ()"
                   moduleName = "WeatherApp"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/evgeniezepcuk/Desktop/iOSDevelopment/WeatherApp/WeatherApp/Views/HourlyWeatherCell.swift"
+                  urlString = "file:///Users/evgeniezepcuk/Desktop/iOSDevelopment/WeatherApp/WeatherApp/Controllers/ViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "72"
-                  endingLineNumber = "72"
-                  offsetFromSymbolStart = "2376">
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "164">
                </Location>
             </Locations>
          </BreakpointContent>

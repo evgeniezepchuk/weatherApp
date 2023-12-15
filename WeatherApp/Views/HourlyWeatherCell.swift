@@ -17,7 +17,7 @@ class HourlyWeatherCell: UITableViewCell {
     
     let collectionView = {
         var layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 5, height: 100)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 6, height: 100)
         layout.scrollDirection = .horizontal
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -67,10 +67,9 @@ extension HourlyWeatherCell: UICollectionViewDelegate, UICollectionViewDataSourc
         let temperature = Int(self.model?.hourly?[indexPath.row].temp ?? 0)
         let hour = Double(self.model?.hourly?[indexPath.row + 1].dt ?? 0)
         let imageID = (model.hourly?[indexPath.row].weather?[0].icon) ?? ""
-        print(imageID, hour, temperature)
-//        DispatchQueue.main.async {
+        DispatchQueue.main.async {
             cell.backgroundView = builder.ViewBuilder(frame: cell.bounds, imageID: imageID, dayOrHour: Timer.shared.unixTimeConvertion(unixTime: hour, dayOrHour: .hour), temperature: temperature.description, stackAxis: .vertical)
-//        }
+        }
         return cell
     }
 }
