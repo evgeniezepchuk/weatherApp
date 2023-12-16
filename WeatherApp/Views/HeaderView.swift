@@ -8,11 +8,7 @@
 import UIKit
 
 
-class HeaderView: UIView {
-    
-    var imageID: String = ""
-    var city: String = ""
-    var temperature: String = ""
+final class HeaderView: UIView {
     
     private lazy var view: UIView = {
         let view = UIView()
@@ -51,7 +47,6 @@ class HeaderView: UIView {
         return verticalStack
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(view)
@@ -76,10 +71,6 @@ class HeaderView: UIView {
     }
     
     private func addConstraint() {
-//        let views = builder.ViewBuilder(frame: .zero, imageID: imageID, dayOrHour: city, temperature: temperature, stackAxis: .vertical)
-//        views.frame = view.bounds
-//        views.backgroundColor = .red
-//        views.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(verticalStack)
         NSLayoutConstraint.activate([
             verticalStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -89,12 +80,9 @@ class HeaderView: UIView {
         ])
     }
     
-    func configureHeaderView(imageID: String, city: String, temperature: String) {
-//        DispatchQueue.main.async {
-            self.weatherImage.image = UIImage(named: imageID)
-            self.cityName.text = city
-            self.weatherValue.text = temperature
-//        }
+    public func configureHeaderView(imageID: String, city: String, temperature: String) {
+        self.weatherImage.image = UIImage(named: imageID)
+        self.cityName.text = city
+        self.weatherValue.text = temperature
     }
-    
 }

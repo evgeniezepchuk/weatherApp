@@ -1,9 +1,0 @@
-/* 
-  Localizable.strings
-  WeatherApp
-
-  Created by Евгений Езепчук on 15.12.23.
-  
-*/ 
-"imperial" = "metric";
-"F" = "C";

@@ -7,17 +7,17 @@
 
 import UIKit
 
-class Builder {
+final class Builder {
     
-    func ViewBuilder(frame: CGRect, imageID: String, dayOrHour: String, temperature: String, stackAxis: NSLayoutConstraint.Axis) -> UIView {
-        
+    func viewBuilder(frame: CGRect, imageID: String, dayOrHour: String, temperature: String, stackAxis: NSLayoutConstraint.Axis) -> UIView {
         
         let stack = UIStackView(frame: frame)
         stack.axis = stackAxis
         stack.backgroundColor = .clear
         stack.alignment = .center
         stack.distribution = .fillEqually
-//        stack.backgroundColor = .cellColor
+        stack.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        stack.isLayoutMarginsRelativeArrangement = true
 
         let temp = UILabel()
         temp.text = temperature
@@ -29,16 +29,13 @@ class Builder {
         weatherImage.image = UIImage(named: imageID)
         weatherImage.contentMode = .scaleAspectFit
   
-        
         let days = UILabel()
-        days.textAlignment = .center
+        days.textAlignment = .left
         days.text = dayOrHour
         days.textColor = .black
         days.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-        
-        let views = [days, weatherImage, temp]
-        
-        views.forEach { view in
+  
+        [days, weatherImage, temp].forEach { view in
             stack.addArrangedSubview(view)
         }
 

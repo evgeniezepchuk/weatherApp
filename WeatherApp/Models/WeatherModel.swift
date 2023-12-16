@@ -7,8 +7,7 @@
 
 import Foundation
 
-
-struct WeatherModel: Codable {
+struct WeatherModel: Decodable {
     let hourly: [Hourly]?
     let daily: [Daily]?
     let lat: Double
@@ -16,8 +15,8 @@ struct WeatherModel: Codable {
     let timezone: String
 }
 
-struct Hourly: Codable {
-    let dt: Int? 
+struct Hourly: Decodable {
+    let dt: Int?
     let temp: Double?
     let feels_like: Double?
     let pressure: Int?
@@ -32,19 +31,19 @@ struct Hourly: Codable {
     let weather: [Weather]?
 }
 
-struct Daily: Codable {
+struct Daily: Decodable {
     let dt: Int?
     let temp: Temp?
     let weather: [Weather]?
 }
 
-struct Temp: Codable {
+struct Temp: Decodable {
     let day: Double?
     let min: Double?
     
 }
 
-struct Weather: Codable {
+struct Weather: Decodable {
     let id: Int?
     let main: String?
     let description: String?
@@ -52,18 +51,26 @@ struct Weather: Codable {
 }
 
 
-struct CitiesList: Codable {
+struct CitiesList: Decodable {
     let cities: [Cities]
 }
 
-struct Cities: Codable {
+struct Cities: Decodable {
     let name: String?
     let lat: Double?
     let lon: Double?
     let local_names: LocalNames?
     let country: String?
+    let state: String?
 }
 
-struct LocalNames: Codable {
+struct LocalNames: Decodable {
     let ru: String?
+    let en: String?
+}
+
+struct Time: Codable {
+    let seconds: String
+    let minutes: String
+    let hours: String
 }

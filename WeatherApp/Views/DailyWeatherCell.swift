@@ -7,13 +7,13 @@
 
 import UIKit
 
-class DailyWeatherCell: UITableViewCell {
+final class DailyWeatherCell: UITableViewCell {
     
     static let identifire = "DailyWeatherCell"
-    let builder: Builder?
-    var model: WeatherModel?
+    private let builder: Builder?
+    private var model: WeatherModel?
     
-    let tableView: UITableView  = {
+    private lazy var tableView: UITableView  = {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DailyWeatherCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -21,6 +21,7 @@ class DailyWeatherCell: UITableViewCell {
         tableView.separatorStyle = .singleLine
         tableView.layer.cornerRadius = 20 
         tableView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        tableView.isScrollEnabled = false
         return tableView
     }()
     
@@ -51,15 +52,14 @@ class DailyWeatherCell: UITableViewCell {
         ])
     }
     
-    func configureCell(model: WeatherModel) {
+    public func configureCell(model: WeatherModel) {
         self.model = model
     }
-    
 }
 
 extension DailyWeatherCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        6
+        7
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -69,7 +69,7 @@ extension DailyWeatherCell: UITableViewDelegate, UITableViewDataSource {
         let temperature = Int(self.model?.daily?[indexPath.row].temp?.min ?? 0)
         let dayOfWeek = Double(self.model?.daily?[indexPath.row + 1].dt ?? 0)
         let imageID = (model.hourly?[indexPath.row].weather?[0].icon) ?? ""
-        cell.backgroundView = builder.ViewBuilder(frame: cell.bounds, imageID: imageID, dayOrHour: Timer.shared.unixTimeConvertion(unixTime: dayOfWeek, dayOrHour: .day), temperature: temperature.description, stackAxis: .horizontal)
+        cell.backgroundView = builder.viewBuilder(frame: cell.bounds, imageID: imageID, dayOrHour: Timer.shared.unixTimeConvertion(unixTime: dayOfWeek, dayOrHour: .day), temperature: temperature.description, stackAxis: .horizontal)
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         return cell

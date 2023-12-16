@@ -8,14 +8,14 @@
 import UIKit
 
 
-class HourlyWeatherCell: UITableViewCell {
+final class HourlyWeatherCell: UITableViewCell {
     
     static let identifire = "HourlyWeatherCell"
-    let builder: Builder?
-    var model: WeatherModel?
+    private let builder: Builder?
+    private var model: WeatherModel?
   
     
-    let collectionView = {
+    private lazy var collectionView = {
         var layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width / 6, height: 100)
         layout.scrollDirection = .horizontal
@@ -48,7 +48,7 @@ class HourlyWeatherCell: UITableViewCell {
         collectionView.frame = contentView.bounds
     }
     
-    func configureCell(model: WeatherModel) {
+    public func configureCell(model: WeatherModel) {
         self.model = model
     }
 
@@ -68,7 +68,7 @@ extension HourlyWeatherCell: UICollectionViewDelegate, UICollectionViewDataSourc
         let hour = Double(self.model?.hourly?[indexPath.row + 1].dt ?? 0)
         let imageID = (model.hourly?[indexPath.row].weather?[0].icon) ?? ""
         DispatchQueue.main.async {
-            cell.backgroundView = builder.ViewBuilder(frame: cell.bounds, imageID: imageID, dayOrHour: Timer.shared.unixTimeConvertion(unixTime: hour, dayOrHour: .hour), temperature: temperature.description, stackAxis: .vertical)
+            cell.backgroundView = builder.viewBuilder(frame: cell.bounds, imageID: imageID, dayOrHour: Timer.shared.unixTimeConvertion(unixTime: hour, dayOrHour: .hour), temperature: temperature.description, stackAxis: .vertical)
         }
         return cell
     }

@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  WeatherApp
+
+  Created by Евгений Езепчук on 15.12.23.
+  
+*/ 
+"imperial" = "metric";
+"F" = "C";
+"en" = "ru";
+"Hourly forecast" = "Почасовой прогноз";
+"7-day forecast" = "Прогноз на неделю";
+"en_US" = "ru_RU";

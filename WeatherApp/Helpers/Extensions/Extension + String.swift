@@ -2,11 +2,10 @@
 //  Extension + String.swift
 //  WeatherApp
 //
-//  Created by Евгений Езепчук on 15.12.23.
+//  Created by Евгений Езепчук on 16.12.23.
 //
 
 import Foundation
-
 
 extension String {
     func localized() -> String {

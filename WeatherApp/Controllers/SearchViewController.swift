@@ -7,63 +7,80 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
     
-    var cities: [Cities]?
+    private var cities: [Cities]?
     
-    private let searchBar = {
+    var delegat: ConfigureViewControllerDelegate?
+    
+    private lazy var searchBar = {
         let controller = UISearchController(searchResultsController: nil)
         controller.searchBar.placeholder = "Search"
         controller.searchBar.tintColor = .systemBlue
         return controller
     }()
     
-    private let tableView = {
+    private lazy var tableView = {
         let tb = UITableView()
         tb.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tb.backgroundColor = .clear
-        
+        tb.isScrollEnabled = false
         return tb
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(tableView)
+        configureView()
+        configureNavBar()
+        configureSearchBar()
         
         tableView.delegate = self
         tableView.dataSource = self
-        view.backgroundColor = .bckrgndColor
-        navigationItem.searchController = searchBar
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavBar()
+    }
+    
+    private func configureSearchBar() {
         searchBar.searchResultsUpdater = self
         searchBar.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
-        
     }
-    
-    
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
     }
-
+    
+    private func configureView() {
+        view.addSubview(tableView)
+        view.backgroundColor = .backgroundBlueColor
+    }
+    
+    private func configureNavBar() {
+        navigationController?.navigationBar.scrollEdgeAppearance = .none
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController = searchBar
+    }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.cities?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .bckrgndColor
-        cell.tintColor = .black
+        cell.backgroundColor = .backgroundBlueColor
+        cell.selectionStyle = .none
         if self.cities != nil {
             DispatchQueue.main.async {
                 cell.textLabel?.text = (self.cities![indexPath.row].name ?? "") + ", " + (self.cities![indexPath.row].country ?? "")
             }
         }
-        
         return cell
     }
     
@@ -74,16 +91,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             switch result {
             case .success(let weather):
                 DispatchQueue.main.async {
-                    let vc = ViewController()
-                    vc.reconfigureView(city: self.cities![indexPath.row].name ?? "", model: weather, isOn: false)
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    self.delegat = MainViewController()
+                    guard let cities = self.cities, let delegat = self.delegat else { return }
+                    delegat.reconfigureView(city: cities[indexPath.row].name ?? "", model: weather, isOn: false)
+                    self.navigationController?.pushViewController(delegat as! UIViewController, animated: true)
                 }
             case .failure(let error):
                 print(error)
             }
         }
     }
-    
 }
 
 extension SearchViewController: UISearchResultsUpdating {

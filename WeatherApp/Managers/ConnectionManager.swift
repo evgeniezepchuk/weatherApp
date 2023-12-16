@@ -8,7 +8,7 @@
 import UIKit
 import Network
 
-class ConnectionManager {
+final class ConnectionManager {
     
     static let shared = ConnectionManager()
     
