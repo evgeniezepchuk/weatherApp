@@ -69,7 +69,7 @@ extension DailyWeatherCell: UITableViewDelegate, UITableViewDataSource {
         let temperature = Int(self.model?.daily?[indexPath.row].temp?.min ?? 0)
         let dayOfWeek = Double(self.model?.daily?[indexPath.row + 1].dt ?? 0)
         let imageID = (model.hourly?[indexPath.row].weather?[0].icon) ?? ""
-        cell.backgroundView = builder.viewBuilder(frame: cell.bounds, imageID: imageID, dayOrHour: Timer.shared.unixTimeConvertion(unixTime: dayOfWeek, dayOrHour: .day), temperature: temperature.description, stackAxis: .horizontal)
+        cell.backgroundView = builder.viewBuilder(frame: cell.bounds, imageID: imageID, dayOrHour: Timer.shared.unixTimeConvertion(unixTime: dayOfWeek, dayOrHour: .day), temperature: temperature.description + "°", stackAxis: .horizontal)
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         return cell

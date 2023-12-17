@@ -68,7 +68,7 @@ extension HourlyWeatherCell: UICollectionViewDelegate, UICollectionViewDataSourc
         let hour = Double(self.model?.hourly?[indexPath.row + 1].dt ?? 0)
         let imageID = (model.hourly?[indexPath.row].weather?[0].icon) ?? ""
         DispatchQueue.main.async {
-            cell.backgroundView = builder.viewBuilder(frame: cell.bounds, imageID: imageID, dayOrHour: Timer.shared.unixTimeConvertion(unixTime: hour, dayOrHour: .hour), temperature: temperature.description, stackAxis: .vertical)
+            cell.backgroundView = builder.viewBuilder(frame: cell.bounds, imageID: imageID, dayOrHour: Timer.shared.unixTimeConvertion(unixTime: hour, dayOrHour: .hour), temperature: temperature.description + "°", stackAxis: .vertical)
         }
         return cell
     }
